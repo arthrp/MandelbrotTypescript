@@ -1,7 +1,7 @@
 class MandlebrotManager {
-    constructor(_canvas) {
+    constructor(_canvas, _magnificationFactor) {
         this._canvas = _canvas;
-        this._magnificationFactor = 200;
+        this._magnificationFactor = _magnificationFactor;
         this._ctx = _canvas.getContext("2d");
     }
     draw(panX, panY) {

@@ -1,8 +1,7 @@
 class MandlebrotManager {
     private readonly _ctx;
-    private readonly _magnificationFactor = 200;
     
-    constructor(private readonly _canvas: any) {
+    constructor(private readonly _canvas: any, private readonly _magnificationFactor) {
         this._ctx = _canvas.getContext("2d");
     }
 
