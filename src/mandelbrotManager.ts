@@ -43,6 +43,56 @@ class MandlebrotManager {
         }
     }
 
+    public drawGreyscalePixels(panX: number, panY: number): void {
+        const ctx = this._ctx;
+        const canvWidth = this._canvas.width;
+        let imageData = ctx.getImageData(0,0,canvWidth,this._canvas.height);
+
+        for(let x = 0; x < this._canvas.width; x++){
+            for(let y = 0; y < this._canvas.height; y++){
+                let mandelbrotCoefficient = this.getMandelbrotCoefficient(x/this._magnificationFactor - panX, y/this._magnificationFactor - panY, 255);
+                let indices = this.getPixelColorIndices(x,y,canvWidth);
+
+                imageData.data[indices[0]] =
+                 imageData.data[indices[1]] = 
+                 imageData.data[indices[2]] =
+                 mandelbrotCoefficient;
+
+                imageData.data[indices[3]] = 255;
+            }
+        }
+
+        ctx.putImageData(imageData,0,0);
+    }
+
+    public drawColoredPixels(panX: number, panY: number): void {
+        const ctx = this._ctx;
+        const canvWidth = this._canvas.width;
+        let imageData = ctx.getImageData(0,0,canvWidth,this._canvas.height);
+
+        for(let x = 0; x < this._canvas.width; x++){
+            for(let y = 0; y < this._canvas.height; y++){
+                let greenColor = this.getMandelbrotCoefficient(x/this._magnificationFactor - panX, y/this._magnificationFactor - panY, 255);
+                let redColor = this.getMandelbrotCoefficient(x/this._magnificationFactor - panX, y/this._magnificationFactor - panY, 230);
+                let indices = this.getPixelColorIndices(x,y,canvWidth);
+
+                imageData.data[indices[0]] = redColor;
+                imageData.data[indices[1]] = greenColor;
+                imageData.data[indices[2]] = 0;
+                 
+
+                imageData.data[indices[3]] = 255;
+            }
+        }
+
+        ctx.putImageData(imageData,0,0);
+    }
+
+    private getPixelColorIndices(x: number, y: number, width: number): any[] {
+        var red = y * (width * 4) + x * 4;
+        return [red, red + 1, red + 2, red + 3];
+    }
+
     private getMandelbrotCoefficient(x: number, y:number, maxOutput: number): number {
         let resultReal = x;
         let resultImaginary = y;

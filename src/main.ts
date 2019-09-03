@@ -1,16 +1,15 @@
 const canv = document.querySelector("#main-canvas");
-const panX = 1.5;
-const panY = 1;
-drawFractal(panX, panY, (<any>document.querySelector("#magn-factor")).value);
+const magnFactor = (<any>document.querySelector("#magn-factor")).value;
+let initialPanX = (<any>document.querySelector("#pan-x")).value;
+
+const displayManager = new DisplayManager(canv, initialPanX, 1, magnFactor);
+displayManager.drawFractal();
+// drawFractal(panX, panY, (<any>document.querySelector("#magn-factor")).value);
 
 document.querySelector("#magn-factor").addEventListener("input", (e) => {
-    console.log(e);
-    const magnFactor = (<any>(e.srcElement)).value;
-    document.querySelector("#magn-factor-value").innerHTML = magnFactor;
-
-    drawFractal(panX, panY, magnFactor);
+    displayManager.handleMagnFactorChange(e);
 });
 
-function drawFractal(panX: number, panY: number, magnFactor: number) {
-    new MandlebrotManager(canv, magnFactor).draw(panX, panY);
-}
+document.querySelector("#pan-x").addEventListener("input", (e) => {
+    displayManager.handlePanXChange(e);
+});
