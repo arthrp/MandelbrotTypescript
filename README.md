@@ -1,4 +1,4 @@
-# MandelbrotTypescript
+# MandelbrotTypescript [![Build Status](https://travis-ci.org/arthrp/MandelbrotTypescript.svg?branch=master)](https://travis-ci.org/arthrp/MandelbrotTypescript)
 
 Generating Mandelbrot set in Typescript
 
